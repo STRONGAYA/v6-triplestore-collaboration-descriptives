@@ -1,0 +1,26 @@
+{
+  "name": "triplestore-collaboration-descriptives",
+  "image": "medicaldataworks.azurecr.io/projects/strongaya/triplestore-collaboration-descriptives",
+  "vantage6_version": "4.3",
+  "partitioning": "horizontal",
+  "functions": [
+    {
+      "name": "central",
+      "description": "Vantage6 algorithm that retrieves the descriptive information of triplestores in a collaboration",
+      "type": "central",
+      "databases": [],
+      "arguments": []
+    },
+    {
+      "name": "central",
+      "description": "",
+      "type": "federated",
+      "databases": [
+        {
+          "name": "Database 1"
+        }
+      ],
+      "arguments": []
+    }
+  ]
+}

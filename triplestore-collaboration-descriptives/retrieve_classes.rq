@@ -1,0 +1,17 @@
+PREFIX dbo: <http://um-cds/ontologies/databaseontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sio: <http://semanticscience.org/resource/>
+
+SELECT ?main_class (COUNT(?value) AS ?main_class_count) ?sub_class (COUNT(?sub_class) AS ?sub_class_count)
+WHERE {
+    ?tablerow sio:SIO_000008 ?patient.
+    ?patient rdf:type ?main_class.
+    ?patient dbo:has_cell ?variable_cell.
+    ?variable_cell dbo:has_value ?value.
+	?variable_cell rdf:type ?sub_class.
+
+    FILTER(isURI(?main_class) && STRSTARTS(STR(?main_class), "http://") && !STRSTARTS(STR(?main_class), "http://www.w3.org/") && !STRSTARTS(STR(?main_class), "http://um-cds/") && !STRSTARTS(STR(?main_class), "http://www.data.local/"))
+    FILTER(isURI(?sub_class) && STRSTARTS(STR(?sub_class), "http://") && !STRSTARTS(STR(?sub_class), "http://www.w3.org/") && !STRSTARTS(STR(?sub_class), "http://um-cds/") && !STRSTARTS(STR(?sub_class), "http://www.data.local/"))
+
+}
+GROUP BY ?main_class ?sub_class
