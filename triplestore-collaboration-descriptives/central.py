@@ -58,12 +58,14 @@ def central(client: AlgorithmClient) -> Any:
         return "All partial results returned empty and partial tasks might have failed, check node logs."
 
     try:
-        # Create a dictionary with the organisation name, sample size, and FAIRification information
-        results = {res['organisation']: {"sample_size": res['sample_size'], "variable_info": res['variable_info']}
-                   for res in _results}
+        # Fetch the results for every organisation
+        org_names_set = set(org_names)
+        results = [org_info for org_info in _results if org_info['organisation'] in org_names_set]
 
-        # Add any missing organisations to the results dictionary
-        results = {org_name: results.get(org_name, "missing") for org_name in org_names}
+        # Add missing organisations to the results
+        missing_orgs = org_names_set - {org_info['organisation'] for org_info in results}
+        results.extend({"organisation": org_name} for org_name in missing_orgs)
+
     except Exception as e:
         error(f"Unknown error occurred when combining results, error: {e}.")
         return f"Unknown error occurred when combining results, error: {e}."
