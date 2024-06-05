@@ -10,6 +10,7 @@ Functions:
 import os
 import sys
 
+import numpy as np
 import pandas as pd
 
 from .post_query import post_sparql_query
@@ -25,18 +26,20 @@ def partial(client: AlgorithmClient, df1: pd.DataFrame) -> Any:
     """
     Executes the decentralised part of the algorithm for the collaboration descriptives.
 
-    This function retrieves the organisation name, reads a SPARQL query from a file, posts the query to an endpoint,
-    and processes the results. The results are then returned in a dictionary format.
+    This function retrieves the organisation name ad country,
+    reads a SPARQL query from a file,  posts the query to an endpoint, and processes the results.
+    The results are then returned in a dictionary format.
 
     Args:
         client (AlgorithmClient): The client instance for the algorithm.
         df1 (pd.DataFrame): The input data frame.
 
     Returns:
-        dict: A dictionary containing the organisation name, sample size, and variable info.
+        dict: A dictionary containing the organisation name, country, sample size, and variable info.
     """
     # Get the name of the organisation
     organisation_name = client.organization.get(client.organization_id).get("name")
+    organisation_country = client.organization.get(client.organization_id).get("country")
 
     try:
         # The 'r' argument means the file will be opened in read mode
@@ -55,11 +58,10 @@ def partial(client: AlgorithmClient, df1: pd.DataFrame) -> Any:
         error(f"Unexpected error occurred whilst posting SPARQL query, error: {e}")
         sys.exit(1)
 
-    # If the result is empty (i.e. the query returned no results)
+    # If the result is empty (i.e. the query returned no results) it is likely the data is not available
     if not result:
-        # Log an error and return a dictionary with an error message
-        error("No results were returned from the SPARQL query.")
-        sys.exit(1)
+        return {"organisation": organisation_name, "country": organisation_country,
+                "sample_size": np.nan, "variable_info": []}
 
     try:
         # Convert main_class_count to int for all items in the list
@@ -76,5 +78,6 @@ def partial(client: AlgorithmClient, df1: pd.DataFrame) -> Any:
         error(f"Unexpected error processing results, error: {e}")
         sys.exit(1)
 
-    # Return a dictionary with the organisation name, sample size, and variable info
-    return {"organisation": organisation_name, "sample_size": sample_size, "variable_info": result}
+    # Return a dictionary with the organisation name, country, sample size, and variable info
+    return {"organisation": organisation_name, "country": organisation_country,
+            "sample_size": sample_size, "variable_info": result}
