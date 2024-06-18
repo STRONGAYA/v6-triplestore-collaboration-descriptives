@@ -1,6 +1,6 @@
 {
   "name": "triplestore-collaboration-descriptives",
-  "image": "medicaldataworks.azurecr.io/projects/strongaya/triplestore-collaboration-descriptives",
+  "image": "medicaldataworks.azurecr.io/projects/strongaya/triple-collab-descr",
   "vantage6_version": "4.3",
   "partitioning": "horizontal",
   "functions": [
