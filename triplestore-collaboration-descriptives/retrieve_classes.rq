@@ -8,10 +8,10 @@ WHERE {
     ?patient rdf:type ?main_class.
     ?patient dbo:has_cell ?variable_cell.
     ?variable_cell dbo:has_value ?value.
-	?variable_cell rdf:type ?sub_class.
-
+    OPTIONAL {
+        ?variable_cell rdf:type ?sub_class.
+        FILTER(isURI(?sub_class) && STRSTARTS(STR(?sub_class), "http://") && !STRSTARTS(STR(?sub_class), "http://www.w3.org/") && !STRSTARTS(STR(?sub_class), "http://um-cds/") && !STRSTARTS(STR(?sub_class), "http://www.data.local/"))
+    }
     FILTER(isURI(?main_class) && STRSTARTS(STR(?main_class), "http://") && !STRSTARTS(STR(?main_class), "http://www.w3.org/") && !STRSTARTS(STR(?main_class), "http://um-cds/") && !STRSTARTS(STR(?main_class), "http://www.data.local/"))
-    FILTER(isURI(?sub_class) && STRSTARTS(STR(?sub_class), "http://") && !STRSTARTS(STR(?sub_class), "http://www.w3.org/") && !STRSTARTS(STR(?sub_class), "http://um-cds/") && !STRSTARTS(STR(?sub_class), "http://www.data.local/"))
-
 }
 GROUP BY ?main_class ?sub_class
