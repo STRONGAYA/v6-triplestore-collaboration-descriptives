@@ -51,7 +51,7 @@ column named `endpoint` with a value that represents the URL to the GraphDB loca
       organizations=[1],
       name='triplestore-collaboration-descriptives',
       description='Vantage6 algorithm that retrieves the descriptive information of triplestores in a collaboration',
-      image='medicaldataworks.azurecr.io/projects/strongaya/triple-collab-descr',
+      image='ghcr.io/strongaya/v6-descriptive-statistics:v1.0.0',
       input=input_,
       data_format='json'
   )

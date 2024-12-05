@@ -35,7 +35,7 @@ where you should provide a sensible value for the Docker image name. The
 You can create an additional tag for it by running
 
 ```bash
-docker tag triplestore-collaboration-descriptives medicaldataworks.azurecr.io/projects/strongaya/triple-collab-descr
+docker tag triplestore-collaboration-descriptives ghcr.io/strongaya/v6-descriptive-statistics:v1.0.0
 ```
 
 This way, you can e.g. do
@@ -47,7 +47,7 @@ Finally, you need to push the image to the Docker registry. This can be done
 by running
 
 ```bash
-docker push medicaldataworks.azurecr.io/projects/strongaya/triple-collab-descr
+docker push ghcr.io/strongaya/v6-descriptive-statistics:v1.0.0
 ```
 
 Note that you need to be logged in to the Docker registry before you can push

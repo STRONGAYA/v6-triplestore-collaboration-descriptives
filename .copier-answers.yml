@@ -15,7 +15,7 @@ central_function_client: true
 central_function_data: false
 central_function_name: central
 copyright: ''
-docker_image: medicaldataworks.azurecr.io/projects/strongaya/triple-collab-descr
+docker_image: ghcr.io/strongaya/v6-descriptive-statistics:v1.0.0
 docker_registry: medicaldataworks.azurecr.io/projects/strongaya/
 has_central_function: true
 has_docs: true
